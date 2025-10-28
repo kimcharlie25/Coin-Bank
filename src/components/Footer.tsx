@@ -42,7 +42,7 @@ const Footer: React.FC = () => {
               <h3 className="text-lg font-display font-semibold">Owner</h3>
             </div>
             <p className="text-sm text-secondary-silver text-center md:text-left">
-              Alan Nacor Cabalquinto
+            Coinbank Main Branch
             </p>
           </div>
         </div>

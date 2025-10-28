@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { ArrowLeft, Clock, Shield, CheckCircle, CreditCard } from 'lucide-react';
+import { ArrowLeft, Shield, CheckCircle, CreditCard } from 'lucide-react';
 import { CartItem, PaymentMethod, ServiceType } from '../types';
 import { usePaymentMethods } from '../hooks/usePaymentMethods';
 
@@ -14,11 +14,7 @@ const Checkout: React.FC<CheckoutProps> = ({ cartItems, totalPrice, onBack }) =>
   const [step, setStep] = useState<'details' | 'payment'>('details');
   const [customerName, setCustomerName] = useState('');
   const [contactNumber, setContactNumber] = useState('');
-  const [serviceType, setServiceType] = useState<ServiceType>('pickup');
-  const [address, setAddress] = useState('');
-  const [landmark, setLandmark] = useState('');
-  const [pickupTime, setPickupTime] = useState('5-10');
-  const [customTime, setCustomTime] = useState('');
+  const [serviceType, setServiceType] = useState<ServiceType>('deposit');
   const [paymentMethod, setPaymentMethod] = useState<PaymentMethod>('gcash');
   const [notes, setNotes] = useState('');
 
@@ -40,18 +36,12 @@ const Checkout: React.FC<CheckoutProps> = ({ cartItems, totalPrice, onBack }) =>
   };
 
   const handlePlaceOrder = () => {
-    const timeInfo = serviceType === 'pickup' 
-      ? (pickupTime === 'custom' ? customTime : `${pickupTime} minutes`)
-      : '';
-    
     const orderDetails = `
 🛒 Coinbank ORDER
 
 👤 Customer: ${customerName}
 📞 Contact: ${contactNumber}
 📍 Service: ${serviceType.charAt(0).toUpperCase() + serviceType.slice(1)}
-${serviceType === 'delivery' ? `🏠 Address: ${address}${landmark ? `\n🗺️ Landmark: ${landmark}` : ''}` : ''}
-${serviceType === 'pickup' ? `⏰ Pickup Time: ${timeInfo}` : ''}
 
 
 📋 ORDER DETAILS:
@@ -72,7 +62,6 @@ ${cartItems.map(item => {
 }).join('\n')}
 
 💰 TOTAL: ₱${totalPrice}
-${serviceType === 'delivery' ? `🛵 DELIVERY FEE:` : ''}
 
 💳 Payment: ${selectedPaymentMethod?.name || paymentMethod}
 📸 Payment Screenshot: Please attach your payment receipt screenshot
@@ -89,9 +78,7 @@ Please confirm this order to proceed. Thank you for choosing Coin bank!
     
   };
 
-  const isDetailsValid = customerName && contactNumber && 
-    (serviceType !== 'delivery' || address) && 
-    (serviceType !== 'pickup' || (pickupTime !== 'custom' || customTime));
+  const isDetailsValid = customerName && contactNumber;
 
   if (step === 'details') {
     return (
@@ -178,8 +165,8 @@ Please confirm this order to proceed. Thank you for choosing Coin bank!
                   <label className="block text-sm font-semibold text-primary-charcoal mb-4">Service Type *</label>
                   <div className="grid grid-cols-2 gap-4">
                   {[
-                    { value: 'pickup', label: 'Pickup', icon: '🚶' },
-                    { value: 'delivery', label: 'Delivery', icon: '🛵' }
+                    { value: 'deposit', label: 'Deposit', icon: '💰' },
+                    { value: 'withdraw', label: 'Withdraw', icon: '💸' }
                   ].map((option) => (
                     <button
                       key={option.value}
@@ -198,75 +185,6 @@ Please confirm this order to proceed. Thank you for choosing Coin bank!
                 </div>
               </div>
 
-              {/* Pickup Time Selection */}
-              {serviceType === 'pickup' && (
-                <div>
-                  <label className="block text-sm font-medium text-black mb-3">Pickup Time *</label>
-                  <div className="space-y-3">
-                    <div className="grid grid-cols-2 gap-3">
-                      {[
-                        { value: '5-10', label: '5-10 minutes' },
-                        { value: '15-20', label: '15-20 minutes' },
-                        { value: '25-30', label: '25-30 minutes' },
-                        { value: 'custom', label: 'Custom Time' }
-                      ].map((option) => (
-                        <button
-                          key={option.value}
-                          type="button"
-                          onClick={() => setPickupTime(option.value)}
-                          className={`p-3 rounded-lg border-2 transition-all duration-200 text-sm ${
-                            pickupTime === option.value
-                              ? 'border-red-600 bg-red-600 text-white'
-                              : 'border-red-300 bg-white text-gray-700 hover:border-red-400'
-                          }`}
-                        >
-                          <Clock className="h-4 w-4 mx-auto mb-1" />
-                          {option.label}
-                        </button>
-                      ))}
-                    </div>
-                    
-                    {pickupTime === 'custom' && (
-                      <input
-                        type="text"
-                        value={customTime}
-                        onChange={(e) => setCustomTime(e.target.value)}
-                        className="w-full px-4 py-3 border border-red-300 rounded-lg focus:ring-2 focus:ring-red-500 focus:border-transparent transition-all duration-200"
-                        placeholder="e.g., 45 minutes, 1 hour, 2:30 PM"
-                        required
-                      />
-                    )}
-                  </div>
-                </div>
-              )}
-
-              {/* Delivery Address */}
-              {serviceType === 'delivery' && (
-                <>
-                  <div>
-                    <label className="block text-sm font-medium text-black mb-2">Delivery Address *</label>
-                    <textarea
-                      value={address}
-                      onChange={(e) => setAddress(e.target.value)}
-                      className="w-full px-4 py-3 border border-red-300 rounded-lg focus:ring-2 focus:ring-red-500 focus:border-transparent transition-all duration-200"
-                      placeholder="Enter your complete delivery address"
-                      rows={3}
-                      required
-                    />
-                  </div>
-                  
-                  <div>
-                    <label className="block text-sm font-medium text-black mb-2">Landmark</label>
-                    <input
-                      type="text"
-                      value={landmark}
-                      onChange={(e) => setLandmark(e.target.value)}
-                      className="w-full px-4 py-3 border border-red-300 rounded-lg focus:ring-2 focus:ring-red-500 focus:border-transparent transition-all duration-200"
-                      placeholder="e.g., Near McDonald's, Beside 7-Eleven, In front of school"
-                    />
-                  </div>
-                </>
-              )}
 
               {/* Special Notes */}
               <div>
@@ -391,17 +309,6 @@ Please confirm this order to proceed. Thank you for choosing Coin bank!
                   <p className="text-secondary-silver-dark"><span className="font-medium text-primary-charcoal">Name:</span> {customerName}</p>
                   <p className="text-secondary-silver-dark"><span className="font-medium text-primary-charcoal">Contact:</span> {contactNumber}</p>
                   <p className="text-secondary-silver-dark"><span className="font-medium text-primary-charcoal">Service:</span> {serviceType.charAt(0).toUpperCase() + serviceType.slice(1)}</p>
-              {serviceType === 'delivery' && (
-                <>
-                      <p className="text-secondary-silver-dark"><span className="font-medium text-primary-charcoal">Address:</span> {address}</p>
-                      {landmark && <p className="text-secondary-silver-dark"><span className="font-medium text-primary-charcoal">Landmark:</span> {landmark}</p>}
-                </>
-              )}
-              {serviceType === 'pickup' && (
-                    <p className="text-secondary-silver-dark">
-                      <span className="font-medium text-primary-charcoal">Pickup Time:</span> {pickupTime === 'custom' ? customTime : `${pickupTime} minutes`}
-                </p>
-              )}
                 </div>
             </div>
 
