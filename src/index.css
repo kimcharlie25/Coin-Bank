@@ -1,38 +1,161 @@
+@import url('https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&family=Montserrat:wght@300;400;500;600;700&display=swap');
+
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
 
-/* Ramen Yard Custom Styles */
-/* Minimal helpers for ramen palette when needed outside tailwind tokens */
-.bg-ramen-cream { background-color: #FFF3E0; }
-.bg-ramen-beige { background-color: #F7E7CE; }
-.text-ramen-red { color: #D7263D; }
-.text-ramen-dark { color: #0B0A0A; }
-.border-ramen-sesame { border-color: #D1C7B7; }
-.ring-ramen-gold { --tw-ring-color: #E0A106; }
-
-/* Hide scrollbar for mobile nav */
-.scrollbar-hide {
-  -ms-overflow-style: none;
-  scrollbar-width: none;
+/* Minimalist Design System */
+@layer base {
+  html {
+    font-family: 'Roboto', 'Montserrat', system-ui, sans-serif;
+    font-weight: 400;
+    line-height: 1.6;
+  }
+  
+  body {
+    @apply bg-background-white text-primary-charcoal antialiased;
+    font-feature-settings: 'kern' 1, 'liga' 1, 'calt' 1;
+  }
+  
+  h1, h2, h3, h4, h5, h6 {
+    font-family: 'Montserrat', 'Roboto', system-ui, sans-serif;
+    font-weight: 600;
+    line-height: 1.2;
+    letter-spacing: -0.025em;
+  }
+  
+  h1 {
+    @apply text-4xl font-semibold;
+  }
+  
+  h2 {
+    @apply text-3xl font-semibold;
+  }
+  
+  h3 {
+    @apply text-2xl font-medium;
+  }
+  
+  h4 {
+    @apply text-xl font-medium;
+  }
+  
+  h5 {
+    @apply text-lg font-medium;
+  }
+  
+  h6 {
+    @apply text-base font-medium;
+  }
 }
 
-.scrollbar-hide::-webkit-scrollbar {
-  display: none;
+@layer components {
+  /* Minimalist Button Styles */
+  .btn-primary {
+    @apply bg-accent-teal text-white px-6 py-3 rounded-lg font-medium transition-all duration-200 hover:bg-accent-teal-dark focus:outline-none focus:ring-2 focus:ring-accent-teal focus:ring-offset-2;
+  }
+  
+  .btn-secondary {
+    @apply bg-transparent border border-secondary-silver text-primary-charcoal px-6 py-3 rounded-lg font-medium transition-all duration-200 hover:bg-secondary-silver-light focus:outline-none focus:ring-2 focus:ring-secondary-silver focus:ring-offset-2;
+  }
+  
+  .btn-minimal {
+    @apply bg-transparent text-primary-charcoal px-4 py-2 rounded-md font-medium transition-all duration-200 hover:bg-secondary-silver-light focus:outline-none focus:ring-2 focus:ring-secondary-silver focus:ring-offset-2;
+  }
+  
+  /* Minimalist Card Styles */
+  .card-minimal {
+    @apply bg-background-white border border-secondary-silver-light rounded-lg shadow-minimal;
+  }
+  
+  .card-elevated {
+    @apply bg-background-white border border-secondary-silver-light rounded-lg shadow-minimal-lg;
+  }
+  
+  /* Minimalist Input Styles */
+  .input-minimal {
+    @apply w-full px-4 py-3 border border-secondary-silver rounded-lg bg-background-white text-primary-charcoal placeholder-secondary-silver-dark focus:outline-none focus:ring-2 focus:ring-accent-teal focus:border-transparent transition-all duration-200;
+  }
+  
+  /* Minimalist Divider */
+  .divider-minimal {
+    @apply border-t border-secondary-silver-light;
+  }
+  
+  /* Spacing Utilities */
+  .section-spacing {
+    @apply py-16 px-4;
+  }
+  
+  .container-minimal {
+    @apply max-w-7xl mx-auto px-4;
+  }
 }
 
-/* Image loading optimization */
+@layer utilities {
+  /* Hide scrollbar for clean look */
+  .scrollbar-hide {
+    -ms-overflow-style: none;
+    scrollbar-width: none;
+  }
+  
+  .scrollbar-hide::-webkit-scrollbar {
+    display: none;
+  }
+  
+  /* Text utilities */
+  .text-balance {
+    text-wrap: balance;
+  }
+  
+  /* Focus styles */
+  .focus-minimal {
+    @apply focus:outline-none focus:ring-2 focus:ring-accent-teal focus:ring-offset-2;
+  }
+  
+  /* Animation utilities */
+  .animate-fade-in {
+    animation: fadeIn 0.3s ease-out;
+  }
+  
+  .animate-slide-up {
+    animation: slideUp 0.4s ease-out;
+  }
+  
+  .animate-scale-in {
+    animation: scaleIn 0.2s ease-out;
+  }
+}
+
+/* Image optimization */
 img {
   image-rendering: -webkit-optimize-contrast;
   image-rendering: crisp-edges;
 }
 
-/* Preload critical images */
-.preload-image {
-  content: '';
-  position: absolute;
-  left: -9999px;
-  top: -9999px;
-  width: 1px;
-  height: 1px;
+/* Smooth scrolling */
+html {
+  scroll-behavior: smooth;
+}
+
+/* Selection styles */
+::selection {
+  @apply bg-accent-teal-light text-white;
+}
+
+/* Custom scrollbar for webkit browsers */
+::-webkit-scrollbar {
+  width: 6px;
+}
+
+::-webkit-scrollbar-track {
+  @apply bg-secondary-silver-light;
+}
+
+::-webkit-scrollbar-thumb {
+  @apply bg-secondary-silver-dark rounded-full;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  @apply bg-secondary-silver;
 }

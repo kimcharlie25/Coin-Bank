@@ -2,7 +2,6 @@ import React from 'react';
 import { MenuItem, CartItem } from '../types';
 import { useCategories } from '../hooks/useCategories';
 import MenuItemCard from './MenuItemCard';
-import MobileNav from './MobileNav';
 
 // Preload images for better performance
 const preloadImages = (items: MenuItem[]) => {
@@ -40,21 +39,6 @@ const Menu: React.FC<MenuProps> = ({ menuItems, addToCart, cartItems, updateQuan
     }
   }, [menuItems, activeCategory]);
 
-  const handleCategoryClick = (categoryId: string) => {
-    setActiveCategory(categoryId);
-    const element = document.getElementById(categoryId);
-    if (element) {
-      const headerHeight = 64; // Header height
-      const mobileNavHeight = 60; // Mobile nav height
-      const offset = headerHeight + mobileNavHeight + 20; // Extra padding
-      const elementPosition = element.offsetTop - offset;
-      
-      window.scrollTo({
-        top: elementPosition,
-        behavior: 'smooth'
-      });
-    }
-  };
 
   React.useEffect(() => {
     if (categories.length > 0) {
@@ -84,51 +68,76 @@ const Menu: React.FC<MenuProps> = ({ menuItems, addToCart, cartItems, updateQuan
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
 
-
   return (
     <>
-      <MobileNav 
-        activeCategory={activeCategory}
-        onCategoryClick={handleCategoryClick}
-      />
-      <main className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
-      <div className="text-center mb-12">
-        <h2 className="text-4xl font-noto font-semibold text-black mb-4">Our Menu</h2>
-        <p className="text-gray-600 max-w-2xl mx-auto">
-          Discover our selection of authentic dim sum, flavorful noodles, and traditional Asian dishes, 
-          all prepared with fresh ingredients and authentic techniques.
-        </p>
-      </div>
+      <main className="bg-background-white">
+        {/* Hero Section */}
+        <section className="section-spacing">
+          <div className="container-minimal">
+            <div className="text-center max-w-4xl mx-auto">
+              <h2 className="text-5xl font-display font-semibold text-primary-charcoal mb-8 tracking-tight">
+                Secure your Coins, Secure your Future
+              </h2>
+              
+              {/* Hero Image with 3:1 Aspect Ratio */}
+              <div className="w-full aspect-[3/1] mb-8 rounded-lg overflow-hidden shadow-minimal-lg">
+                <img 
+                  src="/hero-image.jpg" 
+                  alt="Saving coins for a secure future"
+                  className="w-full h-full object-cover object-center"
+                  loading="eager"
+                />
+              </div>
+              
+              <p className="text-xl text-secondary-silver-dark font-light leading-relaxed">
+                
+              </p>
+            </div>
+          </div>
+        </section>
 
-      {categories.map((category) => {
-        const categoryItems = menuItems.filter(item => item.category === category.id);
-        
-        if (categoryItems.length === 0) return null;
-        
-        return (
-          <section key={category.id} id={category.id} className="mb-16">
-            <div className="flex items-center mb-8">
-              <span className="text-3xl mr-3">{category.icon}</span>
-              <h3 className="text-3xl font-noto font-medium text-black">{category.name}</h3>
-            </div>
-            
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-              {categoryItems.map((item) => {
-                const cartItem = cartItems.find(cartItem => cartItem.id === item.id);
-                return (
-                  <MenuItemCard
-                    key={item.id}
-                    item={item}
-                    onAddToCart={addToCart}
-                    quantity={cartItem?.quantity || 0}
-                    onUpdateQuantity={updateQuantity}
-                  />
-                );
-              })}
-            </div>
-          </section>
-        );
-      })}
+        {/* Menu Categories */}
+        <div className="pb-20">
+          <div className="container-minimal">
+            {categories.map((category) => {
+              const categoryItems = menuItems.filter(item => item.category === category.id);
+              
+              if (categoryItems.length === 0) return null;
+              
+              return (
+                <section key={category.id} id={category.id} className="mb-24">
+                  {/* Category Header */}
+                  <div className="flex items-center mb-12">
+                    <div className="w-16 h-px bg-secondary-silver-light mr-6"></div>
+                    <div className="flex items-center space-x-4">
+                      <span className="text-4xl">{category.icon}</span>
+                      <h3 className="text-4xl font-display font-semibold text-primary-charcoal tracking-tight">
+                        {category.name}
+                      </h3>
+                    </div>
+                    <div className="flex-1 h-px bg-secondary-silver-light ml-6"></div>
+                  </div>
+                  
+                  {/* Menu Items Grid */}
+                  <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+                    {categoryItems.map((item) => {
+                      const cartItem = cartItems.find(cartItem => cartItem.id === item.id);
+                      return (
+                        <MenuItemCard
+                          key={item.id}
+                          item={item}
+                          onAddToCart={addToCart}
+                          quantity={cartItem?.quantity || 0}
+                          onUpdateQuantity={updateQuantity}
+                        />
+                      );
+                    })}
+                  </div>
+                </section>
+              );
+            })}
+          </div>
+        </div>
       </main>
     </>
   );
