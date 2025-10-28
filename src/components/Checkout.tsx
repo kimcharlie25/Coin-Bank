@@ -98,105 +98,105 @@ Please confirm this order to proceed. Thank you for choosing Coin bank!
       <div className="min-h-screen bg-background-white">
         <div className="container-minimal py-8">
           <div className="flex items-center mb-12">
-            <button
-              onClick={onBack}
+          <button
+            onClick={onBack}
               className="flex items-center space-x-3 text-secondary-silver-dark hover:text-primary-charcoal transition-colors duration-200 group"
-            >
+          >
               <ArrowLeft className="h-5 w-5 group-hover:-translate-x-1 transition-transform duration-200" />
               <span className="font-medium">Back to Cart</span>
-            </button>
+          </button>
             <h1 className="text-4xl font-display font-semibold text-primary-charcoal ml-8">Order Details</h1>
-          </div>
+        </div>
 
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-12">
-            {/* Order Summary */}
+          {/* Order Summary */}
             <div className="card-elevated p-8">
               <h2 className="text-2xl font-display font-semibold text-primary-charcoal mb-8">Order Summary</h2>
-              
+            
               <div className="space-y-6 mb-8">
-                {cartItems.map((item) => (
+              {cartItems.map((item) => (
                   <div key={item.id} className="flex items-center justify-between py-4 divider-minimal">
                     <div className="flex-1">
                       <h4 className="font-display font-semibold text-primary-charcoal mb-1">{item.name}</h4>
-                      {item.selectedVariation && (
+                    {item.selectedVariation && (
                         <p className="text-sm text-secondary-silver-dark mb-1">Size: {item.selectedVariation.name}</p>
-                      )}
-                      {item.selectedAddOns && item.selectedAddOns.length > 0 && (
+                    )}
+                    {item.selectedAddOns && item.selectedAddOns.length > 0 && (
                         <p className="text-sm text-secondary-silver-dark mb-1">
-                          Add-ons: {item.selectedAddOns.map(addOn => addOn.name).join(', ')}
-                        </p>
-                      )}
+                        Add-ons: {item.selectedAddOns.map(addOn => addOn.name).join(', ')}
+                      </p>
+                    )}
                       <p className="text-sm text-secondary-silver-dark">₱{item.totalPrice.toFixed(2)} x {item.quantity}</p>
-                    </div>
+                  </div>
                     <span className="font-display font-semibold text-primary-charcoal text-lg">
                       ₱{(item.totalPrice * item.quantity).toFixed(2)}
                     </span>
-                  </div>
-                ))}
-              </div>
-              
+                </div>
+              ))}
+            </div>
+            
               <div className="divider-minimal pt-6">
                 <div className="flex items-center justify-between text-3xl font-display font-semibold text-primary-charcoal">
-                  <span>Total:</span>
+                <span>Total:</span>
                   <span className="text-accent-teal">₱{totalPrice.toFixed(2)}</span>
-                </div>
               </div>
             </div>
+          </div>
 
-            {/* Customer Details Form */}
+          {/* Customer Details Form */}
             <div className="card-elevated p-8">
               <h2 className="text-2xl font-display font-semibold text-primary-charcoal mb-8">Customer Information</h2>
             
               <form className="space-y-8">
-                {/* Customer Information */}
-                <div>
+              {/* Customer Information */}
+              <div>
                   <label className="block text-sm font-semibold text-primary-charcoal mb-3">Full Name *</label>
-                  <input
-                    type="text"
-                    value={customerName}
-                    onChange={(e) => setCustomerName(e.target.value)}
+                <input
+                  type="text"
+                  value={customerName}
+                  onChange={(e) => setCustomerName(e.target.value)}
                     className="input-minimal"
-                    placeholder="Enter your full name"
-                    required
-                  />
-                </div>
+                  placeholder="Enter your full name"
+                  required
+                />
+              </div>
 
-                <div>
+              <div>
                   <label className="block text-sm font-semibold text-primary-charcoal mb-3">Contact Number *</label>
-                  <input
-                    type="tel"
-                    value={contactNumber}
-                    onChange={(e) => setContactNumber(e.target.value)}
+                <input
+                  type="tel"
+                  value={contactNumber}
+                  onChange={(e) => setContactNumber(e.target.value)}
                     className="input-minimal"
-                    placeholder="09XX XXX XXXX"
-                    required
-                  />
-                </div>
+                  placeholder="09XX XXX XXXX"
+                  required
+                />
+              </div>
 
-                {/* Service Type */}
-                <div>
+              {/* Service Type */}
+              <div>
                   <label className="block text-sm font-semibold text-primary-charcoal mb-4">Service Type *</label>
                   <div className="grid grid-cols-2 gap-4">
-                    {[
-                      { value: 'pickup', label: 'Pickup', icon: '🚶' },
-                      { value: 'delivery', label: 'Delivery', icon: '🛵' }
-                    ].map((option) => (
-                      <button
-                        key={option.value}
-                        type="button"
-                        onClick={() => setServiceType(option.value as ServiceType)}
+                  {[
+                    { value: 'pickup', label: 'Pickup', icon: '🚶' },
+                    { value: 'delivery', label: 'Delivery', icon: '🛵' }
+                  ].map((option) => (
+                    <button
+                      key={option.value}
+                      type="button"
+                      onClick={() => setServiceType(option.value as ServiceType)}
                         className={`p-6 rounded-lg border-2 transition-all duration-200 focus-minimal ${
-                          serviceType === option.value
+                        serviceType === option.value
                             ? 'border-accent-teal bg-accent-teal text-white'
                             : 'border-secondary-silver-light bg-background-white text-primary-charcoal hover:border-secondary-silver hover:bg-secondary-silver-light'
-                        }`}
-                      >
+                      }`}
+                    >
                         <div className="text-3xl mb-2">{option.icon}</div>
                         <div className="text-sm font-semibold">{option.label}</div>
-                      </button>
-                    ))}
-                  </div>
+                    </button>
+                  ))}
                 </div>
+              </div>
 
               {/* Pickup Time Selection */}
               {serviceType === 'pickup' && (
@@ -280,18 +280,18 @@ Please confirm this order to proceed. Thank you for choosing Coin bank!
                 />
               </div>
 
-                <button
-                  onClick={handleProceedToPayment}
-                  disabled={!isDetailsValid}
+              <button
+                onClick={handleProceedToPayment}
+                disabled={!isDetailsValid}
                   className={`w-full py-4 rounded-lg font-semibold text-lg transition-all duration-200 ${
-                    isDetailsValid
+                  isDetailsValid
                       ? 'btn-primary'
                       : 'bg-secondary-silver-light text-secondary-silver-dark cursor-not-allowed'
-                  }`}
-                >
-                  Proceed to Payment
-                </button>
-              </form>
+                }`}
+              >
+                Proceed to Payment
+              </button>
+            </form>
             </div>
           </div>
         </div>
@@ -304,18 +304,18 @@ Please confirm this order to proceed. Thank you for choosing Coin bank!
     <div className="min-h-screen bg-background-white">
       <div className="container-minimal py-8">
         <div className="flex items-center mb-12">
-          <button
-            onClick={() => setStep('details')}
+        <button
+          onClick={() => setStep('details')}
             className="flex items-center space-x-3 text-secondary-silver-dark hover:text-primary-charcoal transition-colors duration-200 group"
-          >
+        >
             <ArrowLeft className="h-5 w-5 group-hover:-translate-x-1 transition-transform duration-200" />
             <span className="font-medium">Back to Details</span>
-          </button>
+        </button>
           <h1 className="text-4xl font-display font-semibold text-primary-charcoal ml-8">Secure Payment</h1>
-        </div>
+      </div>
 
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-12">
-          {/* Payment Method Selection */}
+        {/* Payment Method Selection */}
           <div className="card-elevated p-8">
             <div className="flex items-center space-x-3 mb-8">
               <Shield className="h-6 w-6 text-accent-teal" />
@@ -323,48 +323,48 @@ Please confirm this order to proceed. Thank you for choosing Coin bank!
             </div>
             
             <div className="space-y-4 mb-8">
-              {paymentMethods.map((method) => (
-                <button
-                  key={method.id}
-                  type="button"
-                  onClick={() => setPaymentMethod(method.id as PaymentMethod)}
+            {paymentMethods.map((method) => (
+              <button
+                key={method.id}
+                type="button"
+                onClick={() => setPaymentMethod(method.id as PaymentMethod)}
                   className={`w-full p-6 rounded-lg border-2 transition-all duration-200 flex items-center space-x-4 focus-minimal ${
-                    paymentMethod === method.id
+                  paymentMethod === method.id
                       ? 'border-accent-teal bg-accent-teal text-white'
                       : 'border-secondary-silver-light bg-background-white text-primary-charcoal hover:border-secondary-silver hover:bg-secondary-silver-light'
-                  }`}
-                >
+                }`}
+              >
                   <CreditCard className="h-6 w-6" />
                   <span className="font-semibold text-lg">{method.name}</span>
-                </button>
-              ))}
-            </div>
+              </button>
+            ))}
+          </div>
 
-            {/* Payment Details with QR Code */}
-            {selectedPaymentMethod && (
+          {/* Payment Details with QR Code */}
+          {selectedPaymentMethod && (
               <div className="bg-accent-teal/5 border border-accent-teal/20 rounded-lg p-6 mb-8">
                 <h3 className="font-display font-semibold text-primary-charcoal mb-4">Payment Details</h3>
                 <div className="flex flex-col md:flex-row items-start md:items-center justify-between gap-6">
-                  <div className="flex-1">
+                <div className="flex-1">
                     <p className="text-sm text-secondary-silver-dark mb-1">{selectedPaymentMethod.name}</p>
                     <p className="font-mono text-primary-charcoal font-semibold text-lg">{selectedPaymentMethod.account_number}</p>
                     <p className="text-sm text-secondary-silver-dark mb-3">Account Name: {selectedPaymentMethod.account_name}</p>
                     <p className="text-2xl font-display font-semibold text-accent-teal">Amount: ₱{totalPrice.toFixed(2)}</p>
-                  </div>
-                  <div className="flex-shrink-0">
-                    <img 
-                      src={selectedPaymentMethod.qr_code_url} 
-                      alt={`${selectedPaymentMethod.name} QR Code`}
+                </div>
+                <div className="flex-shrink-0">
+                  <img 
+                    src={selectedPaymentMethod.qr_code_url} 
+                    alt={`${selectedPaymentMethod.name} QR Code`}
                       className="w-32 h-32 rounded-lg border-2 border-secondary-silver-light shadow-minimal"
-                      onError={(e) => {
-                        e.currentTarget.src = 'https://images.pexels.com/photos/8867482/pexels-photo-8867482.jpeg?auto=compress&cs=tinysrgb&w=300&h=300&fit=crop';
-                      }}
-                    />
+                    onError={(e) => {
+                      e.currentTarget.src = 'https://images.pexels.com/photos/8867482/pexels-photo-8867482.jpeg?auto=compress&cs=tinysrgb&w=300&h=300&fit=crop';
+                    }}
+                  />
                     <p className="text-xs text-secondary-silver-dark text-center mt-2">Scan to pay</p>
-                  </div>
                 </div>
               </div>
-            )}
+            </div>
+          )}
 
             {/* Payment Proof Notice */}
             <div className="bg-secondary-silver-light border border-secondary-silver rounded-lg p-6">
@@ -377,10 +377,10 @@ Please confirm this order to proceed. Thank you for choosing Coin bank!
                   </p>
                 </div>
               </div>
-            </div>
           </div>
+        </div>
 
-          {/* Order Summary */}
+        {/* Order Summary */}
           <div className="card-elevated p-8">
             <h2 className="text-2xl font-display font-semibold text-primary-charcoal mb-8">Final Order Summary</h2>
             
@@ -391,62 +391,62 @@ Please confirm this order to proceed. Thank you for choosing Coin bank!
                   <p className="text-secondary-silver-dark"><span className="font-medium text-primary-charcoal">Name:</span> {customerName}</p>
                   <p className="text-secondary-silver-dark"><span className="font-medium text-primary-charcoal">Contact:</span> {contactNumber}</p>
                   <p className="text-secondary-silver-dark"><span className="font-medium text-primary-charcoal">Service:</span> {serviceType.charAt(0).toUpperCase() + serviceType.slice(1)}</p>
-                  {serviceType === 'delivery' && (
-                    <>
+              {serviceType === 'delivery' && (
+                <>
                       <p className="text-secondary-silver-dark"><span className="font-medium text-primary-charcoal">Address:</span> {address}</p>
                       {landmark && <p className="text-secondary-silver-dark"><span className="font-medium text-primary-charcoal">Landmark:</span> {landmark}</p>}
-                    </>
-                  )}
-                  {serviceType === 'pickup' && (
+                </>
+              )}
+              {serviceType === 'pickup' && (
                     <p className="text-secondary-silver-dark">
                       <span className="font-medium text-primary-charcoal">Pickup Time:</span> {pickupTime === 'custom' ? customTime : `${pickupTime} minutes`}
-                    </p>
-                  )}
+                </p>
+              )}
                 </div>
-              </div>
+            </div>
 
-              {cartItems.map((item) => (
+            {cartItems.map((item) => (
                 <div key={item.id} className="flex items-center justify-between py-4 divider-minimal">
                   <div className="flex-1">
                     <h4 className="font-display font-semibold text-primary-charcoal mb-1">{item.name}</h4>
-                    {item.selectedVariation && (
+                  {item.selectedVariation && (
                       <p className="text-sm text-secondary-silver-dark mb-1">Size: {item.selectedVariation.name}</p>
-                    )}
-                    {item.selectedAddOns && item.selectedAddOns.length > 0 && (
+                  )}
+                  {item.selectedAddOns && item.selectedAddOns.length > 0 && (
                       <p className="text-sm text-secondary-silver-dark mb-1">
-                        Add-ons: {item.selectedAddOns.map(addOn => 
-                          addOn.quantity && addOn.quantity > 1 
-                            ? `${addOn.name} x${addOn.quantity}`
-                            : addOn.name
-                        ).join(', ')}
-                      </p>
-                    )}
+                      Add-ons: {item.selectedAddOns.map(addOn => 
+                        addOn.quantity && addOn.quantity > 1 
+                          ? `${addOn.name} x${addOn.quantity}`
+                          : addOn.name
+                      ).join(', ')}
+                    </p>
+                  )}
                     <p className="text-sm text-secondary-silver-dark">₱{item.totalPrice.toFixed(2)} x {item.quantity}</p>
-                  </div>
+                </div>
                   <span className="font-display font-semibold text-primary-charcoal text-lg">
                     ₱{(item.totalPrice * item.quantity).toFixed(2)}
                   </span>
-                </div>
-              ))}
-            </div>
-            
+              </div>
+            ))}
+          </div>
+          
             <div className="divider-minimal pt-6 mb-8">
               <div className="flex items-center justify-between text-3xl font-display font-semibold text-primary-charcoal">
-                <span>Total:</span>
+              <span>Total:</span>
                 <span className="text-accent-teal">₱{totalPrice.toFixed(2)}</span>
-              </div>
             </div>
+          </div>
 
-            <button
-              onClick={handlePlaceOrder}
+          <button
+            onClick={handlePlaceOrder}
               className="w-full btn-primary py-4 text-lg font-semibold"
-            >
-              Place Order via Messenger
-            </button>
-            
+          >
+            Place Order via Messenger
+          </button>
+          
             <p className="text-xs text-secondary-silver-dark text-center mt-4">
-              You'll be redirected to Facebook Messenger to confirm your order. Don't forget to attach your payment screenshot!
-            </p>
+            You'll be redirected to Facebook Messenger to confirm your order. Don't forget to attach your payment screenshot!
+          </p>
           </div>
         </div>
       </div>

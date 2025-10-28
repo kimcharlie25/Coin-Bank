@@ -6,6 +6,7 @@ import SubNav from './components/SubNav';
 import Menu from './components/Menu';
 import Cart from './components/Cart';
 import Checkout from './components/Checkout';
+import Footer from './components/Footer';
 import AdminDashboard from './components/AdminDashboard';
 import { useMenu } from './hooks/useMenu';
 
@@ -65,6 +66,8 @@ function MainApp() {
           onBack={() => handleViewChange('cart')}
         />
       )}
+      
+      <Footer />
     </div>
   );
 }
